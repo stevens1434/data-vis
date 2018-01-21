@@ -9,6 +9,7 @@ import Signup from './Signup';
 import Login from './Login';
 import Logout from './Logout';
 import UserProfile from './UserProfile';
+import Rescuetime from './Rescuetime';
 import axios from 'axios';
 
 class App extends Component {
@@ -61,11 +62,13 @@ class App extends Component {
   }
 
   render() {
-    var theUser = this.state.user
+    let user = this.state.user
+    console.log('user in App.js: ', user);
     if (typeof this.state.user === 'object' && Object.keys(this.state.user).length !== 0) {
       return (
         <div className='App'>
           <UserProfile user={this.state.user} logout={this.logout} />
+          <Rescuetime user={this.state.user} logout={this.logout} />
         </div>
       );
     } else {
