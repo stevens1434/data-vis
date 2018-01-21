@@ -20,24 +20,56 @@ class Rescuetime extends Component {
   }
 
   change(e) {
-    console.log("this.state in trail.js parent: ", this.state);
-    // let response = this.state.data;
-    // let tempData = [];
-    // let subData = {};
-    // let keys = Object.keys(response);
-    // let values = Object.values(response);
-    // let length = Object.keys(response).length;
-    // console.log('keys: ', keys);
-    // console.log('values: ', values);
-    // for (let i = 0; i < length; i ++) {
-    //   // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
-    //   subData.key = keys[i]; //TO SEPARATE KEY:VALUE PAIRS
-    //   subData.value = values[i]; //TO SEPARATE KEY:VALUE PAIRS
-    //   tempData.push(subData);
-    //   console.log('subdata: ', subData);
-    //   subData = {};
-    // }
-    // console.log('data array: ', tempData);
+    // console.log("this.state in trail.js parent: ", this.state);
+    let response = this.state.data;
+    let tempData = [];
+    let subData = {};
+    let length = Object.keys(response).length;
+    for (let i = 0; i < length; i ++) {
+      // console.log('response[i]: ', response[i])
+      let tempDateData = response[i];
+      console.log('tempDateData: ', tempDateData);
+      let keys = Object.keys(tempDateData);
+      // console.log('keys: ', keys);
+      let values = Object.values(tempDateData);
+      subData.key = keys;
+      subData.value = values;
+      subData.date = tempDateData.date;
+      tempData.push(subData);
+      console.log('subdata: ', subData);
+      subData = {};
+      console.log('tempData: ', tempData);
+      // for (var j in tempDateData) {
+      //   let subData = {};
+      //   let date = {};
+      //   // let subDateData = {};
+      //   // console.log('tempDateData[j]: ', tempDateData[j])
+      //   // let keys = Object.keys(tempDateData);
+      //   let values = Object.values(tempDateData);
+      //   // console.log('values: ', values)
+      //   // subDateData.date = tempDateData.date;
+      //   // subDateData.key = keys;
+      //   // subDateData.value = values;
+      //   // date = tempDateData.date
+      //   subData.key = keys;
+      //   subData.value = values;
+      //   tempData.push(subData);
+      //   // console.log('tempDateData: ', tempDateData);
+      //   console.log('subdata: ', subData);
+      //   // console.log('tempData: ', tempData);
+      //   subData = {};
+      // }
+
+      // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
+      // let keys = Object.keys(response[j]);
+      // let values = Object.values(response[j]);
+      // subData.key = keys[j]; //TO SEPARATE KEY:VALUE PAIRS
+      // subData.value = values[j]; //TO SEPARATE KEY:VALUE PAIRS
+      // tempData.push(subData);
+      // console.log('subdata: ', subData);
+      // subData = {};
+    }
+    console.log('data array: ', tempData);
   }
 
   componentDidMount() {

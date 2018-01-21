@@ -30,7 +30,14 @@ router.get('/', function(req, res, next) {
   .then(function(response) {
     console.log('response: ', response.data)
     res.send(response.data);
-  });
+  })
+  .then(function(error) {
+    console.log(error);
+  })
+
+  // fetch('https://www.rescuetime.com/anapi/daily_summary_feed?key='+rescuetimeApi)
+  // .then(response => response.json())
+  // .then(response => res.send(response))
 
 });
 
