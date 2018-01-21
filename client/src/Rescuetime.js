@@ -20,56 +20,7 @@ class Rescuetime extends Component {
   }
 
   change(e) {
-    // console.log("this.state in trail.js parent: ", this.state);
-    let response = this.state.data;
-    let tempData = [];
-    let subData = {};
-    let length = Object.keys(response).length;
-    for (let i = 0; i < length; i ++) {
-      // console.log('response[i]: ', response[i])
-      let tempDateData = response[i];
-      console.log('tempDateData: ', tempDateData);
-      let keys = Object.keys(tempDateData);
-      // console.log('keys: ', keys);
-      let values = Object.values(tempDateData);
-      subData.key = keys;
-      subData.value = values;
-      subData.date = tempDateData.date;
-      tempData.push(subData);
-      console.log('subdata: ', subData);
-      subData = {};
-      console.log('tempData: ', tempData);
-      // for (var j in tempDateData) {
-      //   let subData = {};
-      //   let date = {};
-      //   // let subDateData = {};
-      //   // console.log('tempDateData[j]: ', tempDateData[j])
-      //   // let keys = Object.keys(tempDateData);
-      //   let values = Object.values(tempDateData);
-      //   // console.log('values: ', values)
-      //   // subDateData.date = tempDateData.date;
-      //   // subDateData.key = keys;
-      //   // subDateData.value = values;
-      //   // date = tempDateData.date
-      //   subData.key = keys;
-      //   subData.value = values;
-      //   tempData.push(subData);
-      //   // console.log('tempDateData: ', tempDateData);
-      //   console.log('subdata: ', subData);
-      //   // console.log('tempData: ', tempData);
-      //   subData = {};
-      // }
-
-      // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
-      // let keys = Object.keys(response[j]);
-      // let values = Object.values(response[j]);
-      // subData.key = keys[j]; //TO SEPARATE KEY:VALUE PAIRS
-      // subData.value = values[j]; //TO SEPARATE KEY:VALUE PAIRS
-      // tempData.push(subData);
-      // console.log('subdata: ', subData);
-      // subData = {};
-    }
-    console.log('data array: ', tempData);
+    console.log("this.state in Rescutetime.js parent: ", this.state);
   }
 
   componentDidMount() {
@@ -78,7 +29,7 @@ class Rescuetime extends Component {
     axios.get('rescuetime', {
       // data: rescuetimeApi
     }).then(function(response) {
-      console.log('api key response: ', response);
+      // console.log('api key response: ', response);
       // let tempData = [];
       // let subData = {};
       // let keys = Object.keys(response.data);
@@ -103,10 +54,43 @@ class Rescuetime extends Component {
     })
   }
 
+  // let response = this.state.data;
+  // let tempData = [];
+  // let subData = {};
+  // let length = Object.keys(response).length;
+  // for (let i = 0; i < length; i ++) {
+  //   let tempDateData = response[i];
+  //   let keys = Object.keys(tempDateData);
+  //   let values = Object.values(tempDateData);
+  //   subData.key = keys;
+  //   subData.value = values;
+  //   subData.date = tempDateData.date;
+  //   tempData.push(subData);
+  //   subData = {};
+  // }
+
   render() {
     let user = this.props.user;
     console.log('state: ', this.state.data);
     let data = this.state.data;
+
+    let response = this.state.data;
+    let tempData = [];
+    let subData = {};
+    let arrSplit = [];
+    let length = Object.keys(response).length;
+    for (let i = 0; i < length; i ++) { //OR for (var i in response)...
+      let tempDateData = response[i];
+      let keys = Object.keys(tempDateData);
+      let values = Object.values(tempDateData);
+      // console.log('values: ', values);
+      subData.key = keys;
+      subData.value = values;
+      subData.date = tempDateData.date;
+      console.log('subData: ', subData);
+      tempData.push(subData);
+      subData = {};
+    }
     if (Object.keys(data).length === 0) {
       return (
         <div onClick={this.change}>
@@ -127,6 +111,7 @@ class Rescuetime extends Component {
           <BarChartComp
             user={user}
             data={data}
+            response={tempData}
           />
         </div>
       );
