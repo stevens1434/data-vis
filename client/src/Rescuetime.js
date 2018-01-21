@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import BarChartComp from './BarChartComp';
 import axios from 'axios';
 // var unirest = require('unirest');
 // var jQuery = require('jquery');
@@ -20,6 +21,23 @@ class Rescuetime extends Component {
 
   change(e) {
     console.log("this.state in trail.js parent: ", this.state);
+    // let response = this.state.data;
+    // let tempData = [];
+    // let subData = {};
+    // let keys = Object.keys(response);
+    // let values = Object.values(response);
+    // let length = Object.keys(response).length;
+    // console.log('keys: ', keys);
+    // console.log('values: ', values);
+    // for (let i = 0; i < length; i ++) {
+    //   // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
+    //   subData.key = keys[i]; //TO SEPARATE KEY:VALUE PAIRS
+    //   subData.value = values[i]; //TO SEPARATE KEY:VALUE PAIRS
+    //   tempData.push(subData);
+    //   console.log('subdata: ', subData);
+    //   subData = {};
+    // }
+    // console.log('data array: ', tempData);
   }
 
   componentDidMount() {
@@ -29,6 +47,21 @@ class Rescuetime extends Component {
       // data: rescuetimeApi
     }).then(function(response) {
       console.log('api key response: ', response);
+      // let tempData = [];
+      // let subData = {};
+      // let keys = Object.keys(response.data);
+      // let values = Object.values(response.data);
+      // let length = Object.keys(response.data).length;
+      // console.log('keys: ', keys, 'values: ', values, 'length: ', length);
+      // for (let i = 0; i < length; i ++) {
+      //   // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
+      //   subData.key = keys[i]; //TO SEPARATE KEY:VALUE PAIRS
+      //   subData.value = values[i]; //TO SEPARATE KEY:VALUE PAIRS
+      //   tempData.push(subData);
+      //   subData = {};
+      // }
+      // console.log('subdata: ', subData);
+      // console.log('data array: ', data);
       a.setState({
         data: response.data
       })
@@ -59,6 +92,10 @@ class Rescuetime extends Component {
           <h1>RescueTime</h1>
           <p>{user.name}</p>
           <p>{map}</p>
+          <BarChartComp
+            user={user}
+            data={data}
+          />
         </div>
       );
     }
