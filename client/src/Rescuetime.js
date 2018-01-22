@@ -73,21 +73,28 @@ class Rescuetime extends Component {
     let user = this.props.user;
     console.log('state: ', this.state.data);
     let data = this.state.data;
-
     let response = this.state.data;
     let tempData = [];
     let subData = {};
+    let temporary = [];
     let arrSplit = [];
     let length = Object.keys(response).length;
     for (let i = 0; i < length; i ++) { //OR for (var i in response)...
       let tempDateData = response[i];
-      let keys = Object.keys(tempDateData);
-      let values = Object.values(tempDateData);
-      // console.log('values: ', values);
-      subData.key = keys;
-      subData.value = values;
       subData.date = tempDateData.date;
-      console.log('subData: ', subData);
+      subData.id = tempDateData.id;
+      delete response[i].date;
+      delete response[i].id;
+      if (typeof tempDateData === 'string') {
+        delete response[i];
+      }
+      let keys = Object.keys(tempDateData); //TO SEPARATE KEY VALUES
+      let values = Object.values(tempDateData); //TO SEPARATE KEY VALUES
+
+      subData.key = keys; //TO SEPARATE KEY VALUES
+      subData.value = values; //TO SEPARATE KEY VALUES
+
+      subData.data = response[i];
       tempData.push(subData);
       subData = {};
     }
