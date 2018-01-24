@@ -28,7 +28,8 @@ router.get('/', function(req, res, next) {
     responseType:'application/json'
   })
   .then(function(response) {
-    console.log('response: ', response.data)
+    // console.log('response: ', response.data)
+    console.log('loading api data...');
     res.send(response.data);
   })
   .then(function(error) {

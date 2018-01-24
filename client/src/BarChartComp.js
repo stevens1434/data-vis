@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import axios from 'axios';
 import d3 from 'd3';
@@ -43,7 +44,7 @@ class BarChartComp extends Component {
     let user = this.props.user
     let data = this.props.data;
     let response = this.props.response;
-    console.log('response in barchartcomp.js: ', response);
+    // console.log('response in barchartcomp.js: ', response);
     let subData = {};
     let info = [];
     let stringInfo = [];
@@ -61,15 +62,88 @@ class BarChartComp extends Component {
       let metaData = [];
       let productivityPercent = [];
       let product = {};
-      for (var i = 0; i < keyLength.length; i ++) {
+      let tempData = {};
+      for (var p = 0; p < 20; p++) {
+        tempData.key = key[p];
+        tempData.value = value[p]
+        // console.log('tempData: ', tempData);
+        metaData.push(tempData);
+        tempData = {};
+      }
+      for (var i = 20; i < keyLength.length; i ++) {
         subData.key = key[i];
         subData.value = value[i];
+        // console.log('value[i]: ', key[i]);
+        // console.log('subData: ', subData);
+
+
+//         value[i]:  productivity_pulse
+// BarChartComp.js:67 value[i]:  very_productive_percentage
+// BarChartComp.js:67 value[i]:  productive_percentage
+// BarChartComp.js:67 value[i]:  neutral_percentage
+// BarChartComp.js:67 value[i]:  distracting_percentage
+// BarChartComp.js:67 value[i]:  very_distracting_percentage
+// BarChartComp.js:67 value[i]:  all_productive_percentage
+// BarChartComp.js:67 value[i]:  all_distracting_percentage
+// BarChartComp.js:67 value[i]:  uncategorized_percentage
+// BarChartComp.js:67 value[i]:  business_percentage
+// BarChartComp.js:67 value[i]:  communication_and_scheduling_percentage
+// BarChartComp.js:67 value[i]:  social_networking_percentage
+// BarChartComp.js:67 value[i]:  design_and_composition_percentage
+// BarChartComp.js:67 value[i]:  entertainment_percentage
+// BarChartComp.js:67 value[i]:  news_percentage
+// BarChartComp.js:67 value[i]:  software_development_percentage
+// BarChartComp.js:67 value[i]:  reference_and_learning_percentage
+// BarChartComp.js:67 value[i]:  shopping_percentage
+// BarChartComp.js:67 value[i]:  utilities_percentage
+// BarChartComp.js:67 value[i]:  total_hours
+// BarChartComp.js:67 value[i]:  very_productive_hours
+// BarChartComp.js:67 value[i]:  productive_hours
+// BarChartComp.js:67 value[i]:  neutral_hours
+// BarChartComp.js:67 value[i]:  distracting_hours
+// BarChartComp.js:67 value[i]:  very_distracting_hours
+// BarChartComp.js:67 value[i]:  all_productive_hours
+// BarChartComp.js:67 value[i]:  all_distracting_hours
+// BarChartComp.js:67 value[i]:  uncategorized_hours
+// BarChartComp.js:67 value[i]:  business_hours
+// BarChartComp.js:67 value[i]:  communication_and_scheduling_hours
+// BarChartComp.js:67 value[i]:  social_networking_hours
+// BarChartComp.js:67 value[i]:  design_and_composition_hours
+// BarChartComp.js:67 value[i]:  entertainment_hours
+// BarChartComp.js:67 value[i]:  news_hours
+// BarChartComp.js:67 value[i]:  software_development_hours
+// BarChartComp.js:67 value[i]:  reference_and_learning_hours
+// BarChartComp.js:67 value[i]:  shopping_hours
+// BarChartComp.js:67 value[i]:  utilities_hours
+// BarChartComp.js:67 value[i]:  total_duration_formatted
+// BarChartComp.js:67 value[i]:  very_productive_duration_formatted
+// BarChartComp.js:67 value[i]:  productive_duration_formatted
+// BarChartComp.js:67 value[i]:  neutral_duration_formatted
+// BarChartComp.js:67 value[i]:  distracting_duration_formatted
+// BarChartComp.js:67 value[i]:  very_distracting_duration_formatted
+// BarChartComp.js:67 value[i]:  all_productive_duration_formatted
+// BarChartComp.js:67 value[i]:  all_distracting_duration_formatted
+// BarChartComp.js:67 value[i]:  uncategorized_duration_formatted
+// BarChartComp.js:67 value[i]:  business_duration_formatted
+// BarChartComp.js:67 value[i]:  communication_and_scheduling_duration_formatted
+// BarChartComp.js:67 value[i]:  social_networking_duration_formatted
+// BarChartComp.js:67 value[i]:  design_and_composition_duration_formatted
+// BarChartComp.js:67 value[i]:  entertainment_duration_formatted
+// BarChartComp.js:67 value[i]:  news_duration_formatted
+// BarChartComp.js:67 value[i]:  software_development_duration_formatted
+// BarChartComp.js:67 value[i]:  reference_and_learning_duration_formatted
+// BarChartComp.js:67 value[i]:  shopping_duration_formatted
+// BarChartComp.js:67 value[i]:  utilities_duration_formatted
         info.push(subData);
+        // console.log('info: ', info);
         if (typeof subData.value === 'string') {
-          stringInfo.push(info[i]);
+          console.log('info: ', info);
+          stringInfo.push(subData);
+          info.slice(9, 17);
           delete info[i];
         }
-        metaData = info.slice(0, 9)
+        // metaData = info.slice(0, 20)
+        // console.log('metaData: ', metaData);
         subData = {};
         dateAndId.stringInfo = stringInfo;
       }
@@ -77,10 +151,19 @@ class BarChartComp extends Component {
       let totalProduct = [];
       let allProduct = [];
       let uncatProduct = [];
+      let subPercent = [];
+      let totalHours = [];
+      // console.log('metaData: ', metaData);
       productivity.push(metaData[0])
       for (var m = 1; m < 5; m ++) {
         totalProduct.push(metaData[m])
       }
+      for (var o = 9; o < 19; o ++) {
+        // console.log('metaData: ', metaData[o])
+        subPercent.push(metaData[o])
+      }
+      totalHours.push(metaData[19]);
+      // console.log('subPercent: ', subPercent);
       allProduct.push(metaData[6])
       allProduct.push(metaData[7])
       uncatProduct.push(metaData[8])
@@ -88,15 +171,18 @@ class BarChartComp extends Component {
       product.totalProduct = totalProduct
       product.allProduct = allProduct
       product.uncatProduct = uncatProduct
+      product.subPercent = subPercent;
+      product.totalHours = totalHours;
       productivityPercent.push(productivity, totalProduct, allProduct, uncatProduct);
       info.splice(0, 9)
       dateAndId.info = info;
       dateAndId.productivity = product;
+      console.log('dateAndId: ', dateAndId);
       dateData.push(dateAndId);
       info = [];
       stringInfo = [];
     }
-    console.log('dateData: ', dateData);
+    // console.log('dateData: ', dateData);
     if (Object.keys(data).length === 0) {
       return (
         <div onClick={this.change}>
@@ -110,11 +196,24 @@ class BarChartComp extends Component {
         if (myData[m].value < 1 || myData[m].value === 0) {
           myData.splice([m], 1)
         }
-        console.log('myData: ', myData);
+        // console.log('myData: ', myData);
       }
-      const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
-      const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
+      //MAIN BAR CHART
 
+      //MINOR BAR CHART
+      const getPath = (x, y, width, height) => {
+        return `M${x},${y + height}
+                C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
+                C${x + width / 2},${y + height / 3} ${x + 2 * width / 3},${y + height} ${x + width}, ${y + height}
+                Z`;
+      };
+      const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
+      const barColor = (fill) => {
+        return <path fill={minorBarColors}/>;
+      };
+
+      //PIE CHART
+      const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
       const RADIAN = Math.PI / 180;
       const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -151,7 +250,11 @@ class BarChartComp extends Component {
               <Tooltip />
               <XAxis dataKey="key" />
               <YAxis dataKey='value'/>
-              <Bar type="monotone" dataKey="value" barSize={10} fill={minorBarColors}
+              <Bar
+                type="monotone"
+                dataKey="value"
+                barSize={10}
+                fill={barColor}
                 label={data}/>
             </BarChart>
 
