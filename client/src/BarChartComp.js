@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import d3 from 'd3';
 // import dataFile from './data';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip, Pie, PieChart, Cell} from 'recharts';
 // var unirest = require('unirest');
 // var jQuery = require('jquery');
 require('dotenv').config();
@@ -58,6 +58,9 @@ class BarChartComp extends Component {
       dateAndId.id = id;
       let key = response[j].key
       let value = response[j].value
+      let metaData = [];
+      let productivityPercent = [];
+      let product = {};
       for (var i = 0; i < keyLength.length; i ++) {
         subData.key = key[i];
         subData.value = value[i];
@@ -66,14 +69,32 @@ class BarChartComp extends Component {
           stringInfo.push(info[i]);
           delete info[i];
         }
+        metaData = info.slice(0, 9)
         subData = {};
-        dateAndId.info = info;
         dateAndId.stringInfo = stringInfo;
       }
+      let productivity = [];
+      let totalProduct = [];
+      let allProduct = [];
+      let uncatProduct = [];
+      productivity.push(metaData[0])
+      for (var m = 1; m < 5; m ++) {
+        totalProduct.push(metaData[m])
+      }
+      allProduct.push(metaData[6])
+      allProduct.push(metaData[7])
+      uncatProduct.push(metaData[8])
+      product.productivity = productivity
+      product.totalProduct = totalProduct
+      product.allProduct = allProduct
+      product.uncatProduct = uncatProduct
+      productivityPercent.push(productivity, totalProduct, allProduct, uncatProduct);
+      info.splice(0, 9)
+      dateAndId.info = info;
+      dateAndId.productivity = product;
       dateData.push(dateAndId);
       info = [];
       stringInfo = [];
-      info = [];
     }
     console.log('dateData: ', dateData);
     if (Object.keys(data).length === 0) {
@@ -84,6 +105,21 @@ class BarChartComp extends Component {
       )
     } else {
       currentDate = this.state.currentDate;
+      const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
+      const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
+
+      const RADIAN = Math.PI / 180;
+      const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+          <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+          </text>
+        );
+      };
       let map = dateData.map((records, index) => (
         <p
           className='IndividDateButton'
@@ -102,6 +138,33 @@ class BarChartComp extends Component {
             <Bar type="monotone" dataKey="value" barSize={10} fill="green"
               label={data}/>
           </BarChart>
+          <div className='smallCharts'>
+            <BarChart className='smallCharts' width={500} height={400} marginLeft={15} data={dateData[currentDate].productivity.totalProduct}>
+              <CartesianGrid strokeDasharray="3" />
+              <Tooltip />
+              <XAxis dataKey="key" />
+              <YAxis dataKey='value'/>
+              <Bar type="monotone" dataKey="value" barSize={10} fill={minorBarColors}
+                label={data}/>
+            </BarChart>
+
+            <PieChart className='smallCharts' width={500} height={400} onMouseEnter={this.onPieEnter}>
+              <Pie
+                data={dateData[currentDate].productivity.allProduct}
+                cx={300}
+                cy={200}
+                labelLine={true}
+                dataKey='value'
+                label={renderCustomizedLabel}
+                outerRadius={150}
+              >
+              {
+              	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+              }
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
           <p className='DateButtons'>{map}</p>
         </div>
       );
