@@ -105,6 +105,13 @@ class BarChartComp extends Component {
       )
     } else {
       currentDate = this.state.currentDate;
+      let myData = dateData[currentDate].info
+      for (var m in myData) {
+        if (myData[m].value < 1 || myData[m].value === 0) {
+          myData.splice([m], 1)
+        }
+        console.log('myData: ', myData);
+      }
       const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
       const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
 
@@ -130,7 +137,7 @@ class BarChartComp extends Component {
       return (
         <div onClick={this.change}>
           <p>Bar Chart</p>
-          <BarChart width={1300} height={600} marginLeft={15} data={dateData[currentDate].info}>
+          <BarChart width={1300} height={600} marginLeft={15} data={myData}> //dateData[currentDate].info
             <CartesianGrid strokeDasharray="3" />
             <Tooltip />
             <XAxis dataKey="key" />
