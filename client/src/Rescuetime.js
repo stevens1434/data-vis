@@ -107,14 +107,10 @@ class Rescuetime extends Component {
         </div>
       )
     } else {
-      let map = data.map((records, index) => (
-        <h3>{records.date}</h3>
-      ))
       return (
         <div onClick={this.change}>
           <h1>RescueTime</h1>
           <p>{user.name}</p>
-          <p>{map}</p>
           <BarChartComp
             user={user}
             data={data}

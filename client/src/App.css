@@ -16,3 +16,16 @@
   background: lightred;
   padding: 0.5em;
 }
+
+.DateButtons {
+  display: inline-block;
+  width: 800px;
+}
+
+.IndividDateButton {
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 3px 5px 3px 5px;
+  padding: 0px 5px;
+}
