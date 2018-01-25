@@ -63,6 +63,7 @@ class BarChartComp extends Component {
       let productivityPercent = [];
       let product = {};
       let tempData = {};
+      let tempFormatedTime = {}
       for (var p = 0; p < 20; p++) {
         tempData.key = key[p];
         tempData.value = value[p]
@@ -70,13 +71,29 @@ class BarChartComp extends Component {
         metaData.push(tempData);
         tempData = {};
       }
+
+      // for (var p = 0; p < 20; p++) {
+      //   tempData.key = key[p];
+      //   tempData.value = value[p]
+      //   // console.log('tempData: ', tempData);
+      //   metaData.push(tempData);
+      //   tempData = {};
+      // }
+
+      for (var q = 38; q < 57; q++) {
+        // console.log('key: ', key[q]);
+        // console.log('value: ', value[q]);
+        tempFormatedTime.key = key[q];
+        tempFormatedTime.value = value[q]
+        // console.log('tempData: ', tempData);
+        metaData.push(tempFormatedTime);
+        // console.log('metaData: ', metaData);
+        // console.log('tempFormatedTime: ', tempFormatedTime);
+        tempFormatedTime = {};
+      }
       for (var i = 20; i < keyLength.length; i ++) {
         subData.key = key[i];
         subData.value = value[i];
-        // console.log('value[i]: ', key[i]);
-        // console.log('subData: ', subData);
-
-
 //         value[i]:  productivity_pulse
 // BarChartComp.js:67 value[i]:  very_productive_percentage
 // BarChartComp.js:67 value[i]:  productive_percentage
@@ -137,22 +154,25 @@ class BarChartComp extends Component {
         info.push(subData);
         // console.log('info: ', info);
         if (typeof subData.value === 'string') {
-          console.log('info: ', info);
+          // console.log('info: ', info);
           stringInfo.push(subData);
-          info.slice(9, 17);
           delete info[i];
         }
         // metaData = info.slice(0, 20)
         // console.log('metaData: ', metaData);
+        console.log('subData: ', subData);
         subData = {};
         dateAndId.stringInfo = stringInfo;
       }
+      // console.log('metaData: ', metaData);
+      // console.log('metaData slicing: ', metaData.splice(9, 27))
       let productivity = [];
       let totalProduct = [];
       let allProduct = [];
       let uncatProduct = [];
       let subPercent = [];
       let totalHours = [];
+      let formatedTime = [];
       // console.log('metaData: ', metaData);
       productivity.push(metaData[0])
       for (var m = 1; m < 5; m ++) {
@@ -161,6 +181,10 @@ class BarChartComp extends Component {
       for (var o = 9; o < 19; o ++) {
         // console.log('metaData: ', metaData[o])
         subPercent.push(metaData[o])
+      }
+      for (var r = 20; r < 39; r ++) {
+        // console.log('metaData: ', metaData[o])
+        formatedTime.push(metaData[r])
       }
       totalHours.push(metaData[19]);
       // console.log('subPercent: ', subPercent);
@@ -173,8 +197,12 @@ class BarChartComp extends Component {
       product.uncatProduct = uncatProduct
       product.subPercent = subPercent;
       product.totalHours = totalHours;
+      product.formatedTime = formatedTime;
       productivityPercent.push(productivity, totalProduct, allProduct, uncatProduct);
-      info.splice(0, 9)
+      info.splice(0, 8);
+      console.log('info pre-final: ', info);
+      info.splice(10, 27);
+      console.log('info final: ', info);
       dateAndId.info = info;
       dateAndId.productivity = product;
       console.log('dateAndId: ', dateAndId);
