@@ -4,7 +4,7 @@ import './App.css';
 import axios from 'axios';
 import d3 from 'd3';
 // import dataFile from './data';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip, Pie, PieChart, Cell} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip, Pie, PieChart, Cell, Sector} from 'recharts';
 // var unirest = require('unirest');
 // var jQuery = require('jquery');
 require('dotenv').config();
@@ -18,11 +18,14 @@ class BarChartComp extends Component {
     this.state = {
       user: {},
       data: {},
-      currentDate: 0
+      currentDate: 0,
+      activeIndex: 0
     }
     this.componentDidMount = this.componentDidMount.bind(this);
     this.change = this.change.bind(this);
     this.changeChart = this.changeChart.bind(this);
+    this.renderActiveShape = this.renderActiveShape.bind(this);
+    this.changeActiveIndex = this.changeActiveIndex.bind(this);
   }
 
   change(e) {
@@ -35,6 +38,63 @@ class BarChartComp extends Component {
       currentDate: index
     })
   }
+
+  changeActiveIndex() {
+    if (this.state.activeIndex === 0) {
+      this.setState({
+        activeIndex: 1
+      })
+    } else {
+      this.setState({
+        activeIndex: 0
+      })
+    }
+  }
+
+  renderActiveShape = (props) => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
+      fill, payload, percent, value, key } = props;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? 'start' : 'end';
+    const string = key.substring(0, key.length - 2);
+    return (
+      <g>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${string}: ${value}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+          {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        </text>
+      </g>
+    );
+  };
 
   componentDidMount() {
 
@@ -92,7 +152,6 @@ class BarChartComp extends Component {
         subData = {};
         dateAndId.stringInfo = stringInfo;
       }
-      console.log('metaData: ', metaData);
       let originalKeys = [ "productivity_pulse", "very_productive_percentage", "productive_percentage", "neutral_percentage",
       "distracting_percentage", "very_distracting_percentage", "all_productive_percentage", "all_distracting_percentage",
       "uncategorized_percentage", "business_percentage", "communication_and_scheduling_percentage", "social_networking_percentage",
@@ -105,20 +164,19 @@ class BarChartComp extends Component {
       "design_and_composition_duration_formatted", "entertainment_duration_formatted", "news_duration_formatted",
       "software_development_duration_formatted", "reference_and_learning_duration_formatted", "shopping_duration_formatted",
       "utilities_duration_formatted" ]
+
       let newKeys = [ "Productivity Value", "Very Product.", "Productive", "Neutral", "Distract.", "Highly Distract.",
       "Productivity %", "Distracting %", "Uncateg. %", "Business %", "Communication %", "Social Media %", "Design/CSS %",
       "Entertainment %", "News %", "Software Dev %", "Reading %", "Shopping %", "Bills %", "Total Hours", "Total Time",
       "Very Product. Time", "Total Product. Time", "Neutral Time", "Distract. Time", "Very Distract. Time", "Total Product. Time",
       "Total Distract. Time", "Uncateg. Time", "Business Time", "Communicat. Time", "Social Media Time", "Desing/CSS Time",
       "Entertain. Time", "News Time", "Software Dev. Time", "Reading Time", "Shopping Time", "Bills Time" ]
+
       for (var u in metaData) {
         let key = metaData[u].key
         switch (originalKeys[u] === originalKeys[u]) {
           case originalKeys[u] === originalKeys[u]:
-            console.log('original key: ', originalKeys[u]);
-            console.log('new key: ', newKeys[u]);
             metaData[u].key = newKeys[u];
-            console.log('metaData key: ', metaData[u].key)
           break;
         }
       }
@@ -235,14 +293,14 @@ class BarChartComp extends Component {
       //PIE CHART
       const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
       const RADIAN = Math.PI / 180;
-      const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+      const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, key, value }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 1.02;
         const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-
+        const y = cy  + radius * Math.sin(-midAngle * RADIAN) - 15;
+        const string = key.substring(0, key.length - 2);
         return (
-          <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
-            {`${(percent * 100).toFixed(0)}%`}
+          <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+            {`${string}: ${(percent * 100).toFixed(0)}%`}
           </text>
         );
       };
@@ -277,23 +335,22 @@ class BarChartComp extends Component {
                 fill= 'green'
                 label={data}/>
             </BarChart>
-
-            <PieChart className='smallCharts' width={600} height={400} onMouseEnter={this.onPieEnter}>
+            <PieChart className='smallCharts' width={600} height={400}>
               <Pie
+              	activeIndex={this.state.activeIndex}
+                activeShape={this.renderActiveShape}
                 data={dateData[currentDate].productivity.allProduct}
                 cx={300}
                 cy={200}
-                labelLine={true}
-                dataKey='value'
-                label={renderCustomizedLabel}
-                outerRadius={150}
-              >
-              {
-              	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-              }
+                innerRadius={60}
+                outerRadius={100}
+                fill="#8884d8"
+                onMouseEnter={this.changeActiveIndex}>
+                {
+                	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                }
               </Pie>
-              <Tooltip />
-            </PieChart>
+           </PieChart>
           </div>
           <p className='DateButtons'>{map}</p>
         </div>
@@ -303,3 +360,21 @@ class BarChartComp extends Component {
 }
 
 export default BarChartComp;
+
+// SIMPLE PIE
+// <PieChart className='smallCharts' width={600} height={400} onMouseEnter={this.onPieEnter}>
+//   <Pie
+//     data={dateData[currentDate].productivity.allProduct}
+//     cx={300}
+//     cy={200}
+//     labelLine={true}
+//     dataKey='value'
+//     label={renderCustomizedLabel}
+//     outerRadius={150}
+//   >
+//   {
+//     data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+//   }
+//   </Pie>
+//   <Tooltip />
+// </PieChart>
