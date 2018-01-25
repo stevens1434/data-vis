@@ -71,15 +71,6 @@ class BarChartComp extends Component {
         metaData.push(tempData);
         tempData = {};
       }
-
-      // for (var p = 0; p < 20; p++) {
-      //   tempData.key = key[p];
-      //   tempData.value = value[p]
-      //   // console.log('tempData: ', tempData);
-      //   metaData.push(tempData);
-      //   tempData = {};
-      // }
-
       for (var q = 38; q < 57; q++) {
         // console.log('key: ', key[q]);
         // console.log('value: ', value[q]);
@@ -88,83 +79,49 @@ class BarChartComp extends Component {
         // console.log('tempData: ', tempData);
         metaData.push(tempFormatedTime);
         // console.log('metaData: ', metaData);
-        // console.log('tempFormatedTime: ', tempFormatedTime);
         tempFormatedTime = {};
       }
       for (var i = 20; i < keyLength.length; i ++) {
         subData.key = key[i];
         subData.value = value[i];
-//         value[i]:  productivity_pulse
-// BarChartComp.js:67 value[i]:  very_productive_percentage
-// BarChartComp.js:67 value[i]:  productive_percentage
-// BarChartComp.js:67 value[i]:  neutral_percentage
-// BarChartComp.js:67 value[i]:  distracting_percentage
-// BarChartComp.js:67 value[i]:  very_distracting_percentage
-// BarChartComp.js:67 value[i]:  all_productive_percentage
-// BarChartComp.js:67 value[i]:  all_distracting_percentage
-// BarChartComp.js:67 value[i]:  uncategorized_percentage
-// BarChartComp.js:67 value[i]:  business_percentage
-// BarChartComp.js:67 value[i]:  communication_and_scheduling_percentage
-// BarChartComp.js:67 value[i]:  social_networking_percentage
-// BarChartComp.js:67 value[i]:  design_and_composition_percentage
-// BarChartComp.js:67 value[i]:  entertainment_percentage
-// BarChartComp.js:67 value[i]:  news_percentage
-// BarChartComp.js:67 value[i]:  software_development_percentage
-// BarChartComp.js:67 value[i]:  reference_and_learning_percentage
-// BarChartComp.js:67 value[i]:  shopping_percentage
-// BarChartComp.js:67 value[i]:  utilities_percentage
-// BarChartComp.js:67 value[i]:  total_hours
-// BarChartComp.js:67 value[i]:  very_productive_hours
-// BarChartComp.js:67 value[i]:  productive_hours
-// BarChartComp.js:67 value[i]:  neutral_hours
-// BarChartComp.js:67 value[i]:  distracting_hours
-// BarChartComp.js:67 value[i]:  very_distracting_hours
-// BarChartComp.js:67 value[i]:  all_productive_hours
-// BarChartComp.js:67 value[i]:  all_distracting_hours
-// BarChartComp.js:67 value[i]:  uncategorized_hours
-// BarChartComp.js:67 value[i]:  business_hours
-// BarChartComp.js:67 value[i]:  communication_and_scheduling_hours
-// BarChartComp.js:67 value[i]:  social_networking_hours
-// BarChartComp.js:67 value[i]:  design_and_composition_hours
-// BarChartComp.js:67 value[i]:  entertainment_hours
-// BarChartComp.js:67 value[i]:  news_hours
-// BarChartComp.js:67 value[i]:  software_development_hours
-// BarChartComp.js:67 value[i]:  reference_and_learning_hours
-// BarChartComp.js:67 value[i]:  shopping_hours
-// BarChartComp.js:67 value[i]:  utilities_hours
-// BarChartComp.js:67 value[i]:  total_duration_formatted
-// BarChartComp.js:67 value[i]:  very_productive_duration_formatted
-// BarChartComp.js:67 value[i]:  productive_duration_formatted
-// BarChartComp.js:67 value[i]:  neutral_duration_formatted
-// BarChartComp.js:67 value[i]:  distracting_duration_formatted
-// BarChartComp.js:67 value[i]:  very_distracting_duration_formatted
-// BarChartComp.js:67 value[i]:  all_productive_duration_formatted
-// BarChartComp.js:67 value[i]:  all_distracting_duration_formatted
-// BarChartComp.js:67 value[i]:  uncategorized_duration_formatted
-// BarChartComp.js:67 value[i]:  business_duration_formatted
-// BarChartComp.js:67 value[i]:  communication_and_scheduling_duration_formatted
-// BarChartComp.js:67 value[i]:  social_networking_duration_formatted
-// BarChartComp.js:67 value[i]:  design_and_composition_duration_formatted
-// BarChartComp.js:67 value[i]:  entertainment_duration_formatted
-// BarChartComp.js:67 value[i]:  news_duration_formatted
-// BarChartComp.js:67 value[i]:  software_development_duration_formatted
-// BarChartComp.js:67 value[i]:  reference_and_learning_duration_formatted
-// BarChartComp.js:67 value[i]:  shopping_duration_formatted
-// BarChartComp.js:67 value[i]:  utilities_duration_formatted
         info.push(subData);
-        // console.log('info: ', info);
         if (typeof subData.value === 'string') {
-          // console.log('info: ', info);
           stringInfo.push(subData);
           delete info[i];
         }
-        // metaData = info.slice(0, 20)
-        // console.log('metaData: ', metaData);
-        console.log('subData: ', subData);
         subData = {};
         dateAndId.stringInfo = stringInfo;
       }
-      // console.log('metaData: ', metaData);
+      console.log('metaData: ', metaData);
+      let originalKeys = [ "productivity_pulse", "very_productive_percentage", "productive_percentage", "neutral_percentage",
+      "distracting_percentage", "very_distracting_percentage", "all_productive_percentage", "all_distracting_percentage",
+      "uncategorized_percentage", "business_percentage", "communication_and_scheduling_percentage", "social_networking_percentage",
+      "design_and_composition_percentage", "entertainment_percentage", "news_percentage", "software_development_percentage",
+      "reference_and_learning_percentage", "shopping_percentage", "utilities_percentage", "total_hours", "total_duration_formatted",
+      "very_productive_duration_formatted", "productive_duration_formatted", "neutral_duration_formatted",
+      "distracting_duration_formatted", "very_distracting_duration_formatted", "all_productive_duration_formatted",
+      "all_distracting_duration_formatted", "uncategorized_duration_formatted", "business_duration_formatted",
+      "communication_and_scheduling_duration_formatted", "social_networking_duration_formatted",
+      "design_and_composition_duration_formatted", "entertainment_duration_formatted", "news_duration_formatted",
+      "software_development_duration_formatted", "reference_and_learning_duration_formatted", "shopping_duration_formatted",
+      "utilities_duration_formatted" ]
+      let newKeys = [ "Productivity Value", "Very Product.", "Productive", "Neutral", "Distract.", "Highly Distract.",
+      "Productivity %", "Distracting %", "Uncateg. %", "Business %", "Communication %", "Social Media %", "Design/CSS %",
+      "Entertainment %", "News %", "Software Dev %", "Reading %", "Shopping %", "Bills %", "Total Hours", "Total Time",
+      "Very Product. Time", "Total Product. Time", "Neutral Time", "Distract. Time", "Very Distract. Time", "Total Product. Time",
+      "Total Distract. Time", "Uncateg. Time", "Business Time", "Communicat. Time", "Social Media Time", "Desing/CSS Time",
+      "Entertain. Time", "News Time", "Software Dev. Time", "Reading Time", "Shopping Time", "Bills Time" ]
+      for (var u in metaData) {
+        let key = metaData[u].key
+        switch (originalKeys[u] === originalKeys[u]) {
+          case originalKeys[u] === originalKeys[u]:
+            console.log('original key: ', originalKeys[u]);
+            console.log('new key: ', newKeys[u]);
+            metaData[u].key = newKeys[u];
+            console.log('metaData key: ', metaData[u].key)
+          break;
+        }
+      }
       // console.log('metaData slicing: ', metaData.splice(9, 27))
       let productivity = [];
       let totalProduct = [];
@@ -175,7 +132,7 @@ class BarChartComp extends Component {
       let formatedTime = [];
       // console.log('metaData: ', metaData);
       productivity.push(metaData[0])
-      for (var m = 1; m < 5; m ++) {
+      for (var m = 1; m < 6; m ++) {
         totalProduct.push(metaData[m])
       }
       for (var o = 9; o < 19; o ++) {
@@ -200,9 +157,44 @@ class BarChartComp extends Component {
       product.formatedTime = formatedTime;
       productivityPercent.push(productivity, totalProduct, allProduct, uncatProduct);
       info.splice(0, 8);
-      console.log('info pre-final: ', info);
+      // console.log('info pre-final: ', info);
       info.splice(10, 27);
-      console.log('info final: ', info);
+      // console.log('info final: ', info);
+      for (var s in info) {
+        let key = info[s].key
+        switch (key === key) {
+          case key === 'business_hours':
+            info[s].key = 'Business';
+          break;
+          case key === 'communication_and_scheduling_hours':
+            info[s].key = 'Communication';
+          break;
+          case key === 'social_networking_hours':
+            info[s].key = 'Social Media';
+          break;
+          case key === 'design_and_composition_hours':
+            info[s].key = 'Design/CSS';
+          break;
+          case key === 'entertainment_hours':
+            info[s].key = 'Entertainment';
+          break;
+          case key === 'news_hours':
+            info[s].key = 'News';
+          break;
+          case key === 'software_development_hours':
+            info[s].key = 'Software Dev';
+          break;
+          case key === 'reference_and_learning_hours':
+            info[s].key = 'Reading';
+          break;
+          case key === 'shopping_hours':
+            info[s].key = 'Shopping';
+          break;
+          case key === 'utilities_hours':
+            info[s].key = 'Bills';
+          break;
+        }
+      }
       dateAndId.info = info;
       dateAndId.productivity = product;
       console.log('dateAndId: ', dateAndId);
@@ -229,16 +221,16 @@ class BarChartComp extends Component {
       //MAIN BAR CHART
 
       //MINOR BAR CHART
-      const getPath = (x, y, width, height) => {
-        return `M${x},${y + height}
-                C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
-                C${x + width / 2},${y + height / 3} ${x + 2 * width / 3},${y + height} ${x + width}, ${y + height}
-                Z`;
-      };
-      const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
-      const barColor = (fill) => {
-        return <path fill={minorBarColors}/>;
-      };
+      // const getPath = (x, y, width, height) => {
+      //   return `M${x},${y + height}
+      //           C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
+      //           C${x + width / 2},${y + height / 3} ${x + 2 * width / 3},${y + height} ${x + width}, ${y + height}
+      //           Z`;
+      // };
+      // const minorBarColors = ['green', 'lightgreen', 'grey', 'red'];
+      // const barColor = (fill) => {
+      //   return <path fill={minorBarColors}/>;
+      // };
 
       //PIE CHART
       const COLORS = ['green', 'red', '#FFBB28', '#FF8042'];
@@ -258,7 +250,7 @@ class BarChartComp extends Component {
         <p
           className='IndividDateButton'
           onClick={() => this.changeChart(index)}>
-            {records.date} {index}
+            {records.date}
         </p>
       ))
       return (
@@ -273,7 +265,7 @@ class BarChartComp extends Component {
               label={data}/>
           </BarChart>
           <div className='smallCharts'>
-            <BarChart className='smallCharts' width={500} height={400} marginLeft={15} data={dateData[currentDate].productivity.totalProduct}>
+            <BarChart className='smallCharts' width={600} height={400} marginLeft={15} data={dateData[currentDate].productivity.totalProduct}>
               <CartesianGrid strokeDasharray="3" />
               <Tooltip />
               <XAxis dataKey="key" />
@@ -282,11 +274,11 @@ class BarChartComp extends Component {
                 type="monotone"
                 dataKey="value"
                 barSize={10}
-                fill={barColor}
+                fill= 'green'
                 label={data}/>
             </BarChart>
 
-            <PieChart className='smallCharts' width={500} height={400} onMouseEnter={this.onPieEnter}>
+            <PieChart className='smallCharts' width={600} height={400} onMouseEnter={this.onPieEnter}>
               <Pie
                 data={dateData[currentDate].productivity.allProduct}
                 cx={300}
