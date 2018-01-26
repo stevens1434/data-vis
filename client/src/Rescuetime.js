@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-// import App from './App';
+import { CircularProgress } from 'material-ui/Progress';
 import BarChartComp from './BarChartComp';
 import axios from 'axios';
 // var unirest = require('unirest');
@@ -70,8 +70,7 @@ class Rescuetime extends Component {
       return (
         <div onClick={this.change}>
           <h1>RescueTime</h1>
-          <p>Welcome, {user.name}</p>
-          <p>Loading...</p>
+          <CircularProgress className='progress' size={50} />
         </div>
       )
     } else {

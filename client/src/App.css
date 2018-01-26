@@ -7,6 +7,7 @@
   border: 2px solid grey;
   border-radius: 5px;
   margin: 70px 5px 0px 5px;
+  height: 365px;
 }
 
 .LoginBox {
@@ -14,6 +15,7 @@
   border: 2px solid grey;
   border-radius: 5px;
   margin: 70px 5px 0px 5px;
+  height: 365px;
 }
 
 .LogoutBox {
@@ -54,6 +56,10 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #45a049;
+}
+
+.progress {
+    margin: 0px;
 }
 
 .form {
