@@ -17,22 +17,53 @@
   padding: 0.5em;
 }
 
+.BarChartCompContainer {
+  text-align: center;
+
+}
+
 .DateButtons {
   display: inline-block;
   margin: 5px 20px;
-  height: 1000px;
+  height: auto;
+}
+
+.datecontainer {
+  margin-left: 10px;
 }
 
 .datepicker {
   text-align: center;
-  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.datepicker:hover {
+  text-align: center;
+  padding-top: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.DataListCard {
+  width: auto;
+  display: inline-block;
+  margin: 5px 20px;
 }
 
 .IndividDateButton {
   font-size: 25px;
-  color: grey;
+  color: rgb(153, 162, 162);
   display: inline-block;
-  border: 2px solid grey;
+  border: 2px solid rgb(153, 162, 162);
+  border-radius: 5px;
+  margin: 5px 8px 5px 8px;
+  padding: 4px 8px;
+}
+.IndividDateButtonAction {
+  font-size: 25px;
+  color: rgb(45, 127, 83);
+  display: inline-block;
+  background-color: rgba(45, 127, 83, .3);
+  border: 2px solid rgb(45, 127, 83);
   border-radius: 5px;
   margin: 5px 8px 5px 8px;
   padding: 4px 8px;
@@ -40,6 +71,8 @@
 
 .smallCharts {
   display: inline-block;
+  margin-right: 10px;
+  margin-top: 20px;
   text-align: center;
   align-items: center;
 }
@@ -52,10 +85,16 @@
 
 .row-mainrow {
   margin: 5px 20px;
+  width: 100%;
 }
 
 .row-subrow {
-  margin: 30px 100px 0px 10px;
+  margin-left: 0px;
+  margin-right: 50px;
+  float: left;
   display: inline-block;
-  float: right;
+}
+
+.small-bar {
+  margin-top: 10px;
 }

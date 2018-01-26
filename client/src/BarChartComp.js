@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Rescuetime from './Rescuetime';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider, theme } from 'material-ui/styles';
 import Card, {CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import './App.css';
@@ -37,8 +37,9 @@ class BarChartComp extends Component {
     // console.log("this.state in trail.js parent: ", this.state);
   }
 
-  changeChart(index) {
+  changeChart(records, index) {
     console.log('index: ', index);
+    console.log('records.date: ', records)
     this.setState({
       currentDate: index
     })
@@ -151,18 +152,13 @@ class BarChartComp extends Component {
       for (var p = 0; p < 20; p++) {
         tempData.key = key[p];
         tempData.value = value[p]
-        // console.log('tempData: ', tempData);
         metaData.push(tempData);
         tempData = {};
       }
       for (var q = 38; q < 57; q++) {
-        // console.log('key: ', key[q]);
-        // console.log('value: ', value[q]);
         tempFormatedTime.key = key[q];
         tempFormatedTime.value = value[q]
-        // console.log('tempData: ', tempData);
         metaData.push(tempFormatedTime);
-        // console.log('metaData: ', metaData);
         tempFormatedTime = {};
       }
       for (var i = 20; i < keyLength.length; i ++) {
@@ -279,7 +275,7 @@ class BarChartComp extends Component {
       }
       dateAndId.info = info;
       dateAndId.productivity = product;
-      console.log('dateAndId: ', dateAndId);
+      // console.log('dateAndId: ', dateAndId);
       dateData.push(dateAndId);
       info = [];
       stringInfo = [];
@@ -293,8 +289,9 @@ class BarChartComp extends Component {
       )
     } else {
       currentDate = this.state.currentDate;
+      console.log('currentDate: ', currentDate);
       let myData = dateData[currentDate].info
-      console.log('mydata PRE: ', myData);
+      // console.log('mydata PRE: ', myData);
       for (var m in myData) {
         if (myData[m].value < 1 || myData[m].value == 0) {
           myData.splice([m], 1)
@@ -306,8 +303,9 @@ class BarChartComp extends Component {
 
       let map = dateData.map((records, index) => (
         <p
-          className='IndividDateButton'
-          onClick={() => this.changeChart(index)}>
+          key={index}
+          className={index === this.state.currentDate ? 'IndividDateButtonAction' : 'IndividDateButton'}
+          onClick={() => this.changeChart(records.date, index)}>
             {records.date}
         </p>
       ))
@@ -318,30 +316,32 @@ class BarChartComp extends Component {
         console.log('datData for specific date: ', tempArr);
         dataList = tempArr.map((records, index) => (
           <div>
-            <p clasName='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>Hello, {user.name},</p>
-            <p clasName='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>Over {records.productivity.totalHours[0].value} hours you scored a {records.productivity.productivity[0].key} of {records.productivity.productivity[0].value}. {records.productivity.allProduct[0].value}% of your time was categorized as Productive and {records.productivity.allProduct[1].value} of your time was categorized as Unproductive.</p>
-            <p clasName='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>You spent most of your time on {this.sortHigh(records.productivity.subPercent)} and the least amount of time on {this.sortLow(records.productivity.subPercent)}.</p>
-            <p clasName='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>However, {records.productivity.uncatProduct[0].value} of your recorded time was Uncategorized. You categorize it by visiting <a href='www.rescuetime.com'>www.rescuetime.com</a></p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>Over {records.productivity.totalHours[0].value} hours you scored a {records.productivity.productivity[0].key} of {records.productivity.productivity[0].value}. {records.productivity.allProduct[0].value}% of your time was categorized as Productive and {records.productivity.allProduct[1].value} of your time was categorized as Unproductive.</p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>You spent most of your time on {this.sortHigh(records.productivity.subPercent)} and the least amount of time on {this.sortLow(records.productivity.subPercent)}.</p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>However, {records.productivity.uncatProduct[0].value} of your recorded time was Uncategorized. You categorize it by visiting <a href='www.rescuetime.com'>www.rescuetime.com</a></p>
           </div>
         ))
       }
 
       return (
-        <div onClick={this.change}>
-          <MuiThemeProvider>
-            <Grid container spacing={20}>
+        <div className='BarChartCompContainer' onClick={this.change}>
+          <MuiThemeProvider theme={theme}>
+            <Grid container spacing={12}>
               <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                <p className='row row-datalist'>{dataList}</p>
+                <Card className='DataListCard'>
+                <div className='row row-datalist DataListCard'>{dataList}</div>
+                </Card>
               </Grid>
               <Grid item xl={2} lg={2} md={2} sm={2} xs={2}>
-                <Card>
+                <Card className='datecontainer'>
                   <h1 className='datepicker'>Date</h1>
-                  <p className='row row-datebuttons DateButtons'>{map}</p>
+                  <div className='row row-datebuttons DateButtons'>{map}</div>
                 </Card>
               </Grid>
               <Grid item xl={10} lg={10} md={10} sm={10} xs={10}>
-                <Grid className='row-mainrow' item xl={12} lg={12} md={12} sm={12} xs={12}>
-                    <BarChart className='row-main' width={1200} height={600} marginLeft={15} data={myData}> //dateData[currentDate].info
+                <Grid item className='row-mainrow' xl={11} lg={11} md={11} sm={11} xs={11}>
+                  <ResponsiveContainer width='100%' height={501}>
+                    <BarChart className='row-main' width={1000} height={500} marginLeft={15} data={myData}> //dateData[currentDate].info
                       <CartesianGrid strokeDasharray="3" />
                       <Tooltip />
                       <XAxis dataKey="key" />
@@ -349,38 +349,42 @@ class BarChartComp extends Component {
                       <Bar type="monotone" dataKey="value" barSize={10} fill="green"
                         label={data}/>
                     </BarChart>
+                  </ResponsiveContainer>
                 </Grid>
                 <Grid className='row row-subrow' item xl={12} lg={12} md={12} sm={12} xs={12}>
-                  <div className='row row-subrow'>
-                    <BarChart className='smallCharts' width={600} height={400} data={dateData[currentDate].productivity.totalProduct}>
-                      <CartesianGrid strokeDasharray="3" />
-                      <Tooltip />
-                      <XAxis dataKey="key" />
-                      <YAxis dataKey='value'/>
-                      <Bar
-                        type="monotone"
-                        dataKey="value"
-                        barSize={10}
-                        fill= 'green'
-                        label={data}/>
-                    </BarChart>
-                    <PieChart className='smallCharts' width={600} height={400}>
-                      <Pie
-                      	activeIndex={this.state.activeIndex}
-                        activeShape={this.renderActiveShape}
-                        data={dateData[currentDate].productivity.allProduct}
-                        cx={300}
-                        cy={200}
-                        innerRadius={60}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        onMouseEnter={this.changeActiveIndex}>
-                        {
-                        	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-                        }
-                      </Pie>
-                    </PieChart>
-                  </div>
+                  <ResponsiveContainer width='100%' height={351}>
+                    <div className='row row-subrow'>
+                      <BarChart className='smallCharts small-bar' width={500} height={350} data={dateData[currentDate].productivity.totalProduct}>
+                        <CartesianGrid strokeDasharray="3" />
+                        <Tooltip />
+                        <XAxis dataKey="key" />
+                        <YAxis dataKey='value'/>
+                        <Bar
+                          type="monotone"
+                          dataKey="value"
+                          barSize={10}
+                          fill= 'green'
+                          label={data}/>
+                      </BarChart>
+                      <PieChart className='smallCharts small-pie' width={500} height={350}>
+                        <Pie
+                        	activeIndex={this.state.activeIndex}
+                          activeShape={this.renderActiveShape}
+                          data={dateData[currentDate].productivity.allProduct}
+                          dataKey='value'
+                          cx={300}
+                          cy={200}
+                          innerRadius={60}
+                          outerRadius={100}
+                          fill="#8884d8"
+                          onMouseEnter={this.changeActiveIndex}>
+                          {
+                          	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                          }
+                        </Pie>
+                      </PieChart>
+                    </div>
+                  </ResponsiveContainer>
                 </Grid>
               </Grid>
             </Grid>
