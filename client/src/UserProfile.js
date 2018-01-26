@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 import Logout from './Logout';
 
 class UserProfile extends Component {
@@ -11,9 +12,9 @@ class UserProfile extends Component {
 
   render() {
     return (
-      <div className='UserProfileBox'>
-        <p>Hello, {this.props.user.name}!</p>
-        <a onClick={this.props.logout}>Logout</a>
+      <div className='container'>
+        <p className='col'>Hello, {this.props.user.name}!</p>
+        <a className='col' onClick={this.props.logout}>Logout</a>
       </div>
     );
   }

@@ -67,8 +67,8 @@ class App extends Component {
     if (typeof this.state.user === 'object' && Object.keys(this.state.user).length !== 0) {
       return (
         <div className='App'>
-          <UserProfile user={this.state.user} logout={this.logout} />
-          <Rescuetime user={this.state.user} logout={this.logout} />
+          <UserProfile id='navbar' user={this.state.user} logout={this.logout} />
+          <Rescuetime id='content' user={this.state.user} logout={this.logout} />
         </div>
       );
     } else {

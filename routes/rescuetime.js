@@ -43,3 +43,12 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+//SUB-BAR
+//very_productive_percentage
+//productive_percentage
+//neutral_percentage
+//distracting_percentage
+
+//PIE
+//make labels

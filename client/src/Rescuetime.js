@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+// import App from './App';
 import BarChartComp from './BarChartComp';
 import axios from 'axios';
 // var unirest = require('unirest');
 // var jQuery = require('jquery');
 require('dotenv').config();
 let rescuetimeApi;
-let data;
+let response;
 
 class Rescuetime extends Component {
   constructor(props) {
@@ -27,53 +28,20 @@ class Rescuetime extends Component {
     let user = this.props.user;
     let a = this;
     axios.get('rescuetime', {
-      // data: rescuetimeApi
     }).then(function(response) {
-      // console.log('api key response: ', response);
-      // let tempData = [];
-      // let subData = {};
-      // let keys = Object.keys(response.data);
-      // let values = Object.values(response.data);
-      // let length = Object.keys(response.data).length;
-      // console.log('keys: ', keys, 'values: ', values, 'length: ', length);
-      // for (let i = 0; i < length; i ++) {
-      //   // subData[keys[i]] = values[i]; //TO KEEP KEY:VALUE PAIR IN TACT
-      //   subData.key = keys[i]; //TO SEPARATE KEY:VALUE PAIRS
-      //   subData.value = values[i]; //TO SEPARATE KEY:VALUE PAIRS
-      //   tempData.push(subData);
-      //   subData = {};
-      // }
-      // console.log('subdata: ', subData);
-      // console.log('data array: ', data);
       a.setState({
         data: response.data
       })
-      // trailKey = response.data;
     }).catch(function(err) {
       console.log("err: ", err);
     })
   }
 
-  // let response = this.state.data;
-  // let tempData = [];
-  // let subData = {};
-  // let length = Object.keys(response).length;
-  // for (let i = 0; i < length; i ++) {
-  //   let tempDateData = response[i];
-  //   let keys = Object.keys(tempDateData);
-  //   let values = Object.values(tempDateData);
-  //   subData.key = keys;
-  //   subData.value = values;
-  //   subData.date = tempDateData.date;
-  //   tempData.push(subData);
-  //   subData = {};
-  // }
-
   render() {
     let user = this.props.user;
+    console.log('user: ', user);
     console.log('state: ', this.state.data);
-    let data = this.state.data;
-    let response = this.state.data;
+    response = this.state.data;
     let tempData = [];
     let subData = {};
     let temporary = [];
@@ -98,7 +66,7 @@ class Rescuetime extends Component {
       tempData.push(subData);
       subData = {};
     }
-    if (Object.keys(data).length === 0) {
+    if (Object.keys(response).length === 0 || response === 'undefined') {
       return (
         <div onClick={this.change}>
           <h1>RescueTime</h1>
@@ -108,12 +76,12 @@ class Rescuetime extends Component {
       )
     } else {
       return (
-        <div onClick={this.change}>
+        <div id='rescuetime-parent' onClick={this.change}>
           <h1>RescueTime</h1>
-          <p>{user.name}</p>
           <BarChartComp
+            className='container'
             user={user}
-            data={data}
+            data={tempData}
             response={tempData}
           />
         </div>

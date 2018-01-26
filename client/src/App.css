@@ -13,25 +13,49 @@
 }
 
 .LogoutBox {
-  background: lightred;
+  background: red;
   padding: 0.5em;
 }
 
 .DateButtons {
   display: inline-block;
-  width: 800px;
+  margin: 5px 20px;
+  height: 1000px;
+}
+
+.datepicker {
+  text-align: center;
+  margin-top: 15px;
 }
 
 .IndividDateButton {
+  font-size: 25px;
+  color: grey;
   display: inline-block;
-  border: 2px solid black;
+  border: 2px solid grey;
   border-radius: 5px;
-  margin: 3px 5px 3px 5px;
-  padding: 0px 5px;
+  margin: 5px 8px 5px 8px;
+  padding: 4px 8px;
 }
 
 .smallCharts {
   display: inline-block;
   text-align: center;
   align-items: center;
+}
+
+.row-dataList {
+  margin: 5px 10px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.row-mainrow {
+  margin: 5px 20px;
+}
+
+.row-subrow {
+  margin: 30px 100px 0px 10px;
+  display: inline-block;
+  float: right;
 }
