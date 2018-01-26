@@ -185,7 +185,7 @@ class BarChartComp extends Component {
       "software_development_duration_formatted", "reference_and_learning_duration_formatted", "shopping_duration_formatted",
       "utilities_duration_formatted" ]
 
-      let newKeys = [ "Productivity Value", "Very Product.", "Productive", "Neutral", "Distract.", "Highly Distract.",
+      let newKeys = [ "Productivity Value", "V. Product.", "Productive", "Neutral", "Dist.", "V. Dist.",
       "Productivity %", "Distracting %", "Uncateg. %", "Business %", "Communication %", "Social Media %", "Design/CSS %",
       "Entertainment %", "News %", "Software Dev %", "Reading %", "Shopping %", "Bills %", "Total Hours", "Total Time",
       "Very Product. Time", "Total Product. Time", "Neutral Time", "Distract. Time", "Very Distract. Time", "Total Product. Time",
@@ -316,9 +316,9 @@ class BarChartComp extends Component {
         console.log('datData for specific date: ', tempArr);
         dataList = tempArr.map((records, index) => (
           <div>
-            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>Over {records.productivity.totalHours[0].value} hours you scored a {records.productivity.productivity[0].key} of {records.productivity.productivity[0].value}. {records.productivity.allProduct[0].value}% of your time was categorized as Productive and {records.productivity.allProduct[1].value} of your time was categorized as Unproductive.</p>
-            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>You spent most of your time on {this.sortHigh(records.productivity.subPercent)} and the least amount of time on {this.sortLow(records.productivity.subPercent)}.</p>
-            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>However, {records.productivity.uncatProduct[0].value} of your recorded time was Uncategorized. You categorize it by visiting <a href='www.rescuetime.com'>www.rescuetime.com</a></p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>Over <span className='bold'>{records.productivity.totalHours[0].value}</span> hours you scored a <span className='bold'>{records.productivity.productivity[0].key}</span> of <span className='bold'>{records.productivity.productivity[0].value}</span>. <span className='bold'>{records.productivity.allProduct[0].value}%</span> of your time was categorized as <span className='bold'>Productive</span> and <span className='bold'>{records.productivity.allProduct[1].value}</span> of your time was categorized as <span className='bold'>Unproductive.</span></p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>You spent most of your time on <span className='bold'>{this.sortHigh(records.productivity.subPercent)}</span> and the least amount of time on <span className='bold'>{this.sortLow(records.productivity.subPercent)}</span>.</p>
+            <p className='col-xl-12 col-l-12 col-m-12 col-sm-8 col-xs-12'>However, <span className='bold'>{records.productivity.uncatProduct[0].value}</span> of your recorded time was <span className='bold'>Uncategorized</span>. You may categorize it by visiting <a href='www.rescuetime.com'>www.rescuetime.com</a></p>
           </div>
         ))
       }
@@ -332,14 +332,14 @@ class BarChartComp extends Component {
                 <div className='row row-datalist DataListCard'>{dataList}</div>
                 </Card>
               </Grid>
-              <Grid item xl={2} lg={2} md={2} sm={2} xs={2}>
+              <Grid item className='datecontainer' xl={2} lg={2} md={2} sm={12} xs={12}>
                 <Card className='datecontainer'>
                   <h1 className='datepicker'>Date</h1>
                   <div className='row row-datebuttons DateButtons'>{map}</div>
                 </Card>
               </Grid>
-              <Grid item xl={10} lg={10} md={10} sm={10} xs={10}>
-                <Grid item className='row-mainrow' xl={11} lg={11} md={11} sm={11} xs={11}>
+              <Grid item className='ChartContainer' xl={10} lg={10} md={10} sm={12} xs={12}>
+                <Grid item className='row-mainrow' xl={11} lg={11} md={11} sm={12} xs={12}>
                   <ResponsiveContainer width='100%' height={501}>
                     <BarChart className='row-main' width={1000} height={500} marginLeft={15} data={myData}> //dateData[currentDate].info
                       <CartesianGrid strokeDasharray="3" />

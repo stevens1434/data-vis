@@ -5,6 +5,15 @@ import React, { Component } from 'react';
 //   Link
 // } from 'react-router-dom';
 import './App.css';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import { MuiThemeProvider, theme } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 import Signup from './Signup';
 import Login from './Login';
 import Logout from './Logout';
@@ -74,15 +83,32 @@ class App extends Component {
     } else {
       return (
         <div className='App'>
-
-          <div className='SignupBox'>
-            <Signup lift={this.liftTokenToState} />
-          </div>
-
-          <div className='LoginBox'>
-            <Login lift={this.liftTokenToState} />
-          </div>
-
+          <MuiThemeProvider theme={theme}>
+            <Grid container spacing={12}>
+              <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                <AppBar position="fixed">
+                  <Toolbar>
+                    <span className='UserName'>
+                      <Button className='UserName' color='inherit'>RescueTime</Button>
+                    </span>
+                    <Typography type="title" color="inherit" className='MenuTitle'>
+                      Log In or Sign Up
+                    </Typography>
+                  </Toolbar>
+                </AppBar>
+              </Grid>
+              <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+                <div className='SignupBox'>
+                  <Signup lift={this.liftTokenToState} />
+                </div>
+              </Grid>
+              <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+                <div className='LoginBox'>
+                  <Login lift={this.liftTokenToState} />
+                </div>
+              </Grid>
+            </Grid>
+          </MuiThemeProvider>
         </div>
       );
     }
